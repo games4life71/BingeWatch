@@ -18,6 +18,10 @@ parser = argparse.ArgumentParser(description='Process the arguments')
 # cursor.execute("INSERT INTO Series (SeriesID,SeriesName,IMDBLink, Score) VALUES (?,?,?,?)",(12,"test","sa",10))
 # connection.commit()
 
+
+
+
+
 parser.add_argument('-A', '--add', nargs=2, type=str, help='Add a new series [link/imdb] [score]')
 parser.add_argument('-R', '--remove', type=str, help='Remove a series [name]')
 parser.add_argument('-W','--watched',type=str,nargs=3,help='Update number of watched episodes [name] [season] [last_episode]')
