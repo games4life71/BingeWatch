@@ -98,7 +98,12 @@ if args.watched:
 
 if args.updates:
     # show if there are new episodes coming out for a series
-
+    series = series_manager.get_by_name(args.updates)
+    for serie in series:
+        option = input("Do you want to show the updates for " + serie[1] + "? (y/n)")
+        if option != 'y':
+            continue
+        series_manager.show_updates(serie)
     pass
 
 if args.score:

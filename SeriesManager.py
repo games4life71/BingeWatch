@@ -226,3 +226,23 @@ class SeriesManager:
             self.connection.commit()
         except Exception as e:
             self.logger.log("[ERROR]: updating the score failed..." + str(e))
+
+    def show_updates(self, series):
+        print("IMDB link is " + str(series[2]))
+        parsed_id = parse_imdb_link(str(series[2]))
+
+        # update the series with the new episodes
+        self.add(parsed_id, series[3], series[2])
+        new_episodes = self.cursor.execute("SELECT * FROM Episode WHERE SeriesID = ? AND SeasonNumber >= ? "
+                                           "AND EpisodeNumber > ?",
+                                           (series[0], series[6], series[5]))
+        print("Updates from " + series[1] + ":")
+        for episode in new_episodes:
+            print("New episode: " + episode[1] + "(ep:" + str(episode[4]) + ")" + " from season " + str(episode[5]))
+        # TODO update the search on youtube query
+        query = "trailer " + series[1]
+        results = search_youtube(query)
+        for result in results:
+            print("Youtube link: " + result)
+
+
