@@ -2,27 +2,29 @@
 
 import requests
 
-bearer = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YTI3MWU2MmEyZDUzYjE3NGRkYzk5M2I4ZDhjNWQ3NCIsInN1YiI6IjY1NzM2ZWVkMDA2YjAxMDBjNDM0OTQyZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XxK46FWA3Hel7-M71b1G2Pco2QXtS6XUnH0kP_AUT-Y"
+bearer = ("eyJhbGciOiJIUzI1NiJ9"
+          ".eyJhdWQiOiI2YTI3MWU2MmEyZDUzYjE3NGRkYzk5M2I4ZDhjNWQ3NCIsInN1YiI6IjY1NzM2ZWVkMDA2YjAxMDBjNDM0OTQyZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XxK46FWA3Hel7-M71b1G2Pco2QXtS6XUnH0kP_AUT-Y")
 
 
+"""
+    This function is used to get the series by name from the API 
+    It makes a series of calls to different endpoints to get the data
+    First it makes a call to the search endpoint to get the series id on the TBDB based on imdb id
+    Then it makes a call to the series endpoint to get the number of seasons and episodes
+    Then it makes a call for each season to get the number of episodes and info
+    """
 def get_by_id_request(id):
     # get the if based on the imdb id
     url = "https://api.themoviedb.org/3/find/"
     url += id
     url += "?external_source=imdb_id"
 
-    # the response of this method will be a dictionary with the following structure:
-    # {
-    #     "series_name": "The name of the series",
-    #     "series_id": "The id of the series in the database",
-    #     "episodes": the list of episodes
-    # }
-
     api_response = dict()
     headers = {
         'Accept': 'application/json',
         'Authorization': 'Bearer ' + bearer
     }
+
     try:
         response = requests.get(url, headers=headers)
     except requests.exceptions.RequestException as e:
