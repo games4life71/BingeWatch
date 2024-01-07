@@ -82,11 +82,11 @@ class SeriesManager:
 
     def update_watched_episodes(self, name, season, episode):
         # update into series
-        # TODO check if the series is in the database
+
 
         try:
             self.cursor.execute("UPDATE Series SET "
-                                "LastEpisode = ?, LastSeason = ?"
+                                "LastEpisode = ?, LastSeason = ? ,date = CURRENT_TIMESTAMP "
                                 " WHERE SeriesName = ?",
                                 (episode, season, name))
             self.connection.commit()
@@ -244,5 +244,12 @@ class SeriesManager:
         results = search_youtube(query)
         for result in results:
             print("Youtube link: " + result)
+
+    """
+    Searches for updates of a series episode on youtube
+    """
+    def get_trailer(self,seriesName,season, episode):
+        return  search_youtube(seriesName + " season " + str(season) + " episode " + str(episode))
+
 
 
