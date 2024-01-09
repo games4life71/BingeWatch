@@ -72,7 +72,7 @@ class SeriesManager:
 
                     self.logger.log(
                         "[ERROR]: adding a series/episode failed (it's possible it already exists)" + str(e))
-
+                    return "Exception"
         # print the number of episodes in total
         return "succes", id, series_name
 
@@ -82,7 +82,6 @@ class SeriesManager:
 
     def update_watched_episodes(self, name, season, episode):
         # update into series
-
 
         try:
             self.cursor.execute("UPDATE Series SET "
@@ -101,8 +100,6 @@ class SeriesManager:
     """
 
     def remove(self, name):
-        # TODO check if the series is in the database
-        # TODO remove the series from the database
         try:
             # get all the matching series from the database
             series = self.cursor.execute("SELECT * FROM Series WHERE SeriesName LIKE ?", (name + "%",))
@@ -248,8 +245,6 @@ class SeriesManager:
     """
     Searches for updates of a series episode on youtube
     """
-    def get_trailer(self,seriesName,season, episode):
-        return  search_youtube(seriesName + " season " + str(season) + " episode " + str(episode))
 
-
-
+    def get_trailer(self, seriesName, season, episode):
+        return search_youtube(seriesName + " season " + str(season) + " episode " + str(episode))
