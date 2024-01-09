@@ -43,18 +43,22 @@ if len(sys.argv) == 1:
 if args.add:
     imdb_link = args.add[0]
     parsed_id = SeriesManager.parse_imdb_link(imdb_link)
-    print("Adding the series: " + imdb_link)
+    print("Adding the series: " + imdb_link+"...")
     if int(args.add[1]) > 10 or int(args.add[1]) < 0:
         print("Invalid score ... the score must be between 0 and 10")
         # end the program
         exit(1)
     info = series_manager.add(parsed_id, args.add[1], imdb_link)
-
+    if info == "Exception":
+        print("Error while adding the series...check the log file")
+        exit(1)
+    print("Added the series: " + str(info[2]))
     # ask for prompt to set the viewed episodes
     option = input("Do you want to set the viewed episodes? (y/n)")
     if option == 'y':
         episode, season = input("Enter the season and episode number [episode] [season]: ").split()
         series_manager.update_watched_episodes(info[2], season, episode)
+        print("Updated the watched episodes for " + str(info[2]))
     else:
         series_manager.update_watched_episodes(info[2], 0, 0)
 
@@ -74,6 +78,7 @@ if args.snooze:
             if option != 'y':
                 continue
             series_manager.snooze(result[0], 1)
+            print("Snoozed the series " + result[1])
 
     else:
         print("Error while getting the series by name")
@@ -87,6 +92,7 @@ if args.unsnooze:
             if option != 'y':
                 continue
             series_manager.snooze(result[0], 0)
+            print("Unsnoozed the series " + result[1])
 
     else:
         print("Error while getting the series by name")
@@ -95,6 +101,7 @@ if args.unsnooze:
 if args.watched:
     try:
         series_manager.update_watched_episodes(args.watched[0], args.watched[1], args.watched[2])
+        print("Updated the watched episodes for " +args.watched[0])
     except Exception as e:
         logger.log("Error while updating the watched episodes" + str(e))
         exit(1)

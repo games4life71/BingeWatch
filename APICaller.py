@@ -5,7 +5,6 @@ import requests
 bearer = ("eyJhbGciOiJIUzI1NiJ9"
           ".eyJhdWQiOiI2YTI3MWU2MmEyZDUzYjE3NGRkYzk5M2I4ZDhjNWQ3NCIsInN1YiI6IjY1NzM2ZWVkMDA2YjAxMDBjNDM0OTQyZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XxK46FWA3Hel7-M71b1G2Pco2QXtS6XUnH0kP_AUT-Y")
 
-
 """
     This function is used to get the series by name from the API 
     It makes a series of calls to different endpoints to get the data
@@ -13,6 +12,8 @@ bearer = ("eyJhbGciOiJIUzI1NiJ9"
     Then it makes a call to the series endpoint to get the number of seasons and episodes
     Then it makes a call for each season to get the number of episodes and info
     """
+
+
 def get_by_id_request(id):
     # get the if based on the imdb id
     url = "https://api.themoviedb.org/3/find/"
